@@ -52,5 +52,13 @@
                 <div data-i18n="Email">Email</div>
             </a>
         </li>
-        
+        <li class="menu-item">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="menu-link btn btn-link text-start w-100 p-0">
+                    <i class="menu-icon icon-base ti tabler-power"></i>
+                    <div data-i18n="Logout">Logout</div>
+                </button>
+            </form>
+        </li>
 </aside>
