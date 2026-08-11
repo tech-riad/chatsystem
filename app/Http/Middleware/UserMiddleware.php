@@ -16,7 +16,7 @@ class UserMiddleware
     public function handle($request, Closure $next)
     {
 
-        if (auth()->check() && auth()->user()->hasRole('user')) {
+        if (auth()->check() && auth()->user()->hasRole('User')) {
             return $next($request);
         }
 

@@ -24,11 +24,11 @@ class LoginController extends Controller
 
             $user = auth()->user();
 
-            if ($user->hasRole('Super Admin') || $user->hasRole('admin')) {
+            if ($user->hasRole('Super Admin') || $user->hasRole('Admin')) {
                 return redirect()->route('admin.dashboard');
             }
 
-            if ($user->hasRole('user')) {
+            if ($user->hasRole('User')) {
                 return redirect()->route('user.dashboard');
             }
 
