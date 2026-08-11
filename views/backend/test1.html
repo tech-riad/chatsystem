@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="layout-navbar-fixed layout-menu-fixed layout-compact"
+      dir="ltr"
+      data-skin="default"
+      data-bs-theme="light"
+      data-assets-path="../../assets/"
+      data-template="vertical-menu-template">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>WHMCS · Manage Product (fully responsive) · Vuexy</title>
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/vendor/fonts/iconify-icons.css" />
+  <script src="../../assets/vendor/libs/@algolia/autocomplete-js.js"></script>
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/pickr/pickr-themes.css" />
+  <link rel="stylesheet" href="../../assets/vendor/css/core.css" />
+  <link rel="stylesheet" href="../../assets/css/demo.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/animate-css/animate.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/sweetalert2/sweetalert2.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/@form-validation/form-validation.css" />
+
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/css/pages/page-user-view.css" />
+
+  <!-- Helpers -->
+  <script src="../../assets/vendor/js/helpers.js"></script>
+  <script src="../../assets/vendor/js/template-customizer.js"></script>
+  <script src="../../assets/js/config.js"></script>
+
+  <style>
+    /* ===== CRITICAL FIX: Prevent content from going behind menu ===== */
+    .layout-page {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+      width: 100% !important;
+      position: relative !important;
+    }
+    
+    .content-wrapper {
+      width: 100% !important;
+      overflow-x: hidden !important;
+    }
+    
+    .container-p-y {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Fix for all screen sizes */
+    @media (min-width: 1200px) {
+      .layout-menu-fixed .layout-page {
+        padding-left: 16.25rem !important; /* match menu width */
+      }
+    }
+    
+    @media (max-width: 1199.98px) {
+      .layout-menu-fixed .layout-page {
+        padding-left: 0 !important;
+      }
+      
+      /* Ensure menu doesn't push content */
+      .layout-menu {
+        z-index: 1080 !important;
+      }
+    }
+    
+    /* ===== WHMCS FIELD STYLES ===== */
+    .fieldlabel {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+      width: 20%;
+      border: 1px solid #e9ecef;
+    }
+    .fieldarea {
+      background-color: #ffffff;
+      padding: 0.5rem 1rem;
+      vertical-align: middle;
+      border: 1px solid #e9ecef;
+    }
+    .service-field-inline {
+      display: inline-block;
+      margin-right: 8px;
+    }
+    .font-mouse {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+    .input-100, .input-200, .input-300, .input-400 {
+      max-width: 100%;
+    }
+    .input-200 { width: 200px; }
+    .input-300 { width: 280px; }
+    .input-400 { width: 380px; }
+
+    /* date picker icon */
+    .date-picker-prepend-icon { position: relative; }
+    .field-icon { position: absolute; left: 8px; top: 8px; z-index: 3; color: #a1a5b7; }
+    #inputRegdate, #inputNextduedate, #inputTermination_date, #inputOverideSuspendUntil { padding-left: 30px; }
+
+    .addons-service-table { overflow-x: auto; }
+    .tablebg .datatable { background: white; }
+
+    /* ===== FULLY RESPONSIVE FIXES FOR ALL DEVICES ===== */
+    /* Extra small devices (phones, < 576px) */
+    @media screen and (max-width: 575.98px) {
+      .container-p-y {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+      }
+      
+      .card-body {
+        padding: 1rem !important;
+      }
+      
+      /* make table elements block level */
+      .form, .form tbody, .form tr, .form td {
+        display: block;
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+      .form td {
+        padding: 0.5rem 0.5rem;
+        border: none;
+        border-bottom: 1px solid #e9ecef;
+      }
+      .form td.fieldlabel {
+        background-color: #f1f3f5;
+        font-weight: 700;
+        border-bottom: 1px solid #dee2e6;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+      .form td.fieldarea {
+        background-color: #ffffff;
+        border-bottom: 2px solid #e9ecef;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+      .form tr {
+        margin-bottom: 0.5rem;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      /* input fields full width */
+      .form-control, .input-group, .input-200, .input-300, .input-400 {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .input-group {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .input-group .form-control {
+        width: calc(100% - 45px) !important;
+        flex: 1 1 auto;
+      }
+      .input-group-btn {
+        width: auto;
+        flex: 0 0 auto;
+      }
+      /* inline elements stack */
+      .service-field-inline {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 8px;
+      }
+      .btn-container {
+        text-align: center;
+      }
+      /* module buttons stack */
+      #modcmdbtns .btn {
+        display: inline-block;
+        width: calc(50% - 6px);
+        margin-right: 0;
+        margin-bottom: 6px;
+        white-space: normal;
+        font-size: 0.85rem;
+        padding: 0.375rem 0.5rem;
+      }
+      #modcmdbtns .btn:nth-child(odd) {
+        margin-right: 4px;
+      }
+      /* domain group fix */
+      .dropdown-menu {
+        position: absolute !important;
+        transform: translate3d(0, 35px, 0) !important;
+        min-width: 120px !important;
+      }
+      h4 {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* Small devices (landscape phones, 576px - 767px) */
+    @media screen and (min-width: 576px) and (max-width: 767.98px) {
+      .container-p-y {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      
+      .form, .form tbody, .form tr, .form td {
+        display: block;
+        width: 100% !important;
+      }
+      .form td.fieldlabel {
+        background-color: #f1f3f5;
+      }
+      .input-200, .input-300, .input-400 {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      #modcmdbtns .btn {
+        margin-bottom: 5px;
+        width: auto;
+        min-width: 120px;
+      }
+    }
+
+    /* Medium devices (tablets, 768px - 991px) */
+    @media screen and (min-width: 768px) and (max-width: 991.98px) {
+      .input-300, .input-400 { 
+        width: 100% !important; 
+        max-width: 100% !important;
+      }
+      .fieldlabel, .fieldarea { 
+        padding: 0.5rem; 
+        font-size: 0.9rem;
+      }
+      .form-control {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Large devices (desktops, 992px - 1199px) */
+    @media screen and (min-width: 992px) and (max-width: 1199.98px) {
+      .fieldlabel {
+        width: 25% !important;
+      }
+      .fieldarea {
+        width: 25% !important;
+      }
+    }
+
+    /* module command buttons base */
+    #modcmdbtns .btn {
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    /* modal header same as original */
+    .modal-header { background-color: #f8f9fa; }
+    .panel-primary { border-color: #e9ecef; }
+    
+    /* fix for very large screens */
+    @media (min-width: 1400px) {
+      .container-xxl {
+        max-width: 1320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    
+    /* ensure no overflow */
+    .card {
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+    
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside id="layout-menu" class="layout-menu menu-vertical menu">
+      <div class="app-brand demo">
+        <a href="index.html" class="app-brand-link">
+          <span class="app-brand-logo demo"><span class="text-primary"><svg width="32" height="22" viewBox="0 0 32 22" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="currentColor" /><path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" /><path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" /><path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="currentColor" /></svg></span></span>
+          <span class="app-brand-text demo menu-text fw-bold ms-3">Vuexy</span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto"><i class="icon-base ti menu-toggle-icon d-none d-xl-block"></i><i class="icon-base ti tabler-x d-block d-xl-none"></i></a>
+      </div>
+
+      <div class="menu-inner-shadow"></div>
+      <ul class="menu-inner py-1">
+        <!-- Dashboards -->
+        <li class="menu-item"><a href="javascript:void(0);" class="menu-link menu-toggle"><i class="menu-icon icon-base ti tabler-smart-home"></i><div data-i18n="Dashboards">Dashboards</div><div class="badge text-bg-danger rounded-pill ms-auto">5</div></a>
+          <ul class="menu-sub"><li class="menu-item"><a href="index.html" class="menu-link"><div data-i18n="Analytics">Analytics</div></a></li><li class="menu-item"><a href="dashboards-crm.html" class="menu-link"><div data-i18n="CRM">CRM</div></a></li></ul>
+        </li>
+        <!-- Users section - active open -->
+        <li class="menu-item active open">
+          <a href="javascript:void(0);" class="menu-link menu-toggle"><i class="menu-icon icon-base ti tabler-users"></i><div data-i18n="Users">Users</div></a>
+          <ul class="menu-sub">
+            <li class="menu-item"><a href="app-user-list.html" class="menu-link"><div data-i18n="List">List</div></a></li>
+            <li class="menu-item active open">
+              <a href="javascript:void(0);" class="menu-link menu-toggle"><div data-i18n="View">View</div></a>
+              <ul class="menu-sub">
+                <li class="menu-item active"><a href="app-user-view-account.html" class="menu-link"><div data-i18n="Account">Account</div></a></li>
+                <li class="menu-item"><a href="app-user-view-security.html" class="menu-link"><div data-i18n="Security">Security</div></a></li>
+                <li class="menu-item"><a href="app-user-view-billing.html" class="menu-link"><div data-i18n="Billing & Plans">Billing & Plans</div></a></li>
+                <li class="menu-item"><a href="app-user-view-notifications.html" class="menu-link"><div data-i18n="Notifications">Notifications</div></a></li>
+                <li class="menu-item"><a href="app-user-view-connections.html" class="menu-link"><div data-i18n="Connections">Connections</div></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-item"><a href="https://pixinvent.ticksy.com/" target="_blank" class="menu-link"><i class="menu-icon icon-base ti tabler-lifebuoy"></i><div data-i18n="Support">Support</div></a></li>
+        <li class="menu-item"><a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/" target="_blank" class="menu-link"><i class="menu-icon icon-base ti tabler-file-description"></i><div data-i18n="Documentation">Documentation</div></a></li>
+      </ul>
+    </aside>
+    <!-- / Menu -->
+
+    <div class="menu-mobile-toggler d-xl-none rounded-1">
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large text-bg-secondary p-2 rounded-1"><i class="ti tabler-menu icon-base"></i><i class="ti tabler-chevron-right icon-base"></i></a>
+    </div>
+
+    <!-- Layout page -->
+    <div class="layout-page">
+
+      <!-- Navbar -->
+      <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+          <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)"><i class="icon-base ti tabler-menu-2 icon-md"></i></a>
+        </div>
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+          <!-- Search -->
+          <div class="navbar-nav align-items-center">
+            <div class="nav-item navbar-search-wrapper px-md-0 px-2 mb-0">
+              <a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);"><span class="d-inline-block text-body-secondary fw-normal" id="autocomplete"></span></a>
+            </div>
+          </div>
+          <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+            <!-- Language -->
+            <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+              <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="icon-base ti tabler-language icon-22px text-heading"></i></a>
+            </li>
+            <!-- Style Switcher -->
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill" id="nav-theme" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="icon-base ti tabler-sun icon-22px theme-icon-active text-heading"></i></a></li>
+            <!-- Quick links -->
+            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
+              <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="icon-base ti tabler-layout-grid-add icon-22px text-heading"></i></a>
+            </li>
+            <!-- Notification -->
+            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+              <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill" href="javascript:void(0);" data-bs-toggle="dropdown"><span class="position-relative"><i class="icon-base ti tabler-bell icon-22px text-heading"></i><span class="badge rounded-pill bg-danger badge-dot badge-notifications border"></span></span></a>
+            </li>
+            <!-- User -->
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+              <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown"><div class="avatar avatar-online"><img src="../../assets/img/avatars/1.png" alt class="rounded-circle" /></div></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+          <!-- ========== WHMCS PRODUCT MANAGE ========== -->
+          <div class="card mb-4">
+            <div class="card-header"><h4>Manage Product/Service</h4></div>
+            <div class="card-body">
+              <!-- main form -->
+              <form method="post" action="#">
+                <table class="form" width="100%" border="0" cellspacing="2" cellpadding="3">
+
+                  <!-- row 1 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Order #</td>
+                    <td class="fieldarea" width="30%">7 - <a href="orders.php?action=view&id=7">View Order</a></td>
+                    <td class="fieldlabel" width="20%">Registration Date</td>
+                    <td class="fieldarea" width="30%">
+                      <div class="form-group date-picker-prepend-icon">
+                        <label for="inputRegdate" class="field-icon"><i class="fal fa-calendar-alt"></i></label>
+                        <input type="text" name="regdate" value="17/02/2026" size="12" class="form-control date-picker-single" id="inputRegdate" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 2 -->
+                  <tr>
+                    <td class="fieldlabel" rowspan="2" width="20%">Product/Service</td>
+                    <td class="fieldarea" width="30%" rowspan="2">
+                      <input type="hidden" name="oldpackageid" value="2" />
+                      <select name="packageid" onchange="submitServiceChange()" class="form-control select-inline-long">
+                        <optgroup label="Drew Ashley">
+                          <option value="1">Olga Hudson</option>
+                          <option value="2" selected>Maxwell Clark</option>
+                        </optgroup>
+                      </select>
+                    </td>
+                    <td class="fieldlabel" width="20%">Quantity</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="hidden" name="qty" value="1" />
+                      <input type="number" name="qty" value="1" size="30" disabled="disabled" class="form-control input-100" id="inputQty" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="fieldlabel" width="20%">First Payment Amount</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="text" name="firstpaymentamount" value="1.00" size="20" class="form-control input-100" id="inputFirstpaymentamount" />
+                    </td>
+                  </tr>
+
+                  <!-- row 3 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Server</td>
+                    <td class="fieldarea" width="30%">
+                      <select name="server" onchange="submitServiceChange()" class="form-control select-inline">
+                        <option value="0">None</option>
+                      </select>
+                    </td>
+                    <td class="fieldlabel" width="20%">Recurring Amount</td>
+                    <td class="fieldarea" width="30%">
+                      <div style="width: 100%">
+                        <div class="service-field-inline">
+                          <input type="text" name="amount" value="0.00" size="20" class="form-control input-100" id="inputAmount" />
+                        </div>
+                        <div class="service-field-inline">
+                          <div class="font-mouse">Recalculate on Save</div>
+                          <div>
+                            <input type="checkbox" class="slide-toggle auto-recalc-checkbox" id="inputAutorecalc" name="autorecalc" data-size="mini" data-on-text="Yes" data-on-color="info" data-off-text="No" />
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 4 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Domain</td>
+                    <td class="fieldarea" width="30%">
+                      <div class="input-group input-300">
+                        <input type="text" name="domain" value="abcgmail.com" class="form-control domain-input">
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:-3px;">
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="https://abcgmail.com" target="_blank">www</a></li>
+                            <li><a href="#" onclick="$('#frmWhois').submit();return false">whois</a></li>
+                            <li><a href="https://intodns.com/abcgmail.com" target="_blank">intoDNS</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="fieldlabel" width="20%">Next Due Date</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="hidden" name="oldnextduedate" value="17/02/2026" />
+                      <div class="form-group date-picker-prepend-icon">
+                        <label for="inputNextduedate" class="field-icon"><i class="fal fa-calendar-alt"></i></label>
+                        <input type="text" name="nextduedate" value="17/02/2026" size="12" class="form-control date-picker-single future" id="inputNextduedate" />
+                      </div>
+                      <span id="notAvailableSpan">N/A</span>
+                    </td>
+                  </tr>
+
+                  <!-- row 5 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Dedicated IP</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="text" name="dedicatedip" value="" size="25" class="form-control input-200" id="inputDedicatedip" />
+                    </td>
+                    <td class="fieldlabel" width="20%">Termination Date</td>
+                    <td class="fieldarea" width="30%">
+                      <div class="form-group date-picker-prepend-icon">
+                        <label for="inputTermination_date" class="field-icon"><i class="fal fa-calendar-alt"></i></label>
+                        <input type="text" name="termination_date" value="" size="12" class="form-control date-picker-single" id="inputTermination_date" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 6 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Username</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="text" name="username" value="" size="20" class="form-control input-200 input-inline" id="inputUsername" />
+                    </td>
+                    <td class="fieldlabel" width="20%">Billing Cycle</td>
+                    <td class="fieldarea" width="30%">
+                      <select name="billingcycle" class="form-control select-inline" id="selectBillingCycle">
+                        <option value="Free Account">Free</option>
+                        <option value="One Time" selected>One Time</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Semi-Annually">Semi-Annually</option>
+                        <option value="Annually">Annually</option>
+                        <option value="Biennially">Biennially</option>
+                        <option value="Triennially">Triennially</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <!-- row 7 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Password</td>
+                    <td class="fieldarea" width="30%">
+                      <input type="text" name="password" value="" size="20" class="form-control input-200" id="inputPassword" />
+                    </td>
+                    <td class="fieldlabel" width="20%">Payment Method</td>
+                    <td class="fieldarea" width="30%">
+                      <select name="paymentmethod" class="form-control select-inline">
+                        <option value="mailin" selected>Mail In Payment</option>
+                        <option value="paypal_ppcpv">PayPal</option>
+                        <option value="paypal_acdc">Credit/Debit Card</option>
+                        <option value="banktransfer">Bank Transfer</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <!-- row 8 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Status</td>
+                    <td class="fieldarea" width="30%">
+                      <select name="domainstatus" class="form-control select-inline" id="prodstatus">
+                        <option value="Pending">Pending</option>
+                        <option value="Active" selected>Active</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Suspended">Suspended</option>
+                        <option value="Terminated">Terminated</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Fraud">Fraud</option>
+                      </select>
+                    </td>
+                    <td class="fieldlabel" width="20%">Promotion Code <a href="#" data-toggle="tooltip" data-placement="bottom" title="Change will not affect price"><i class="fa fa-info-circle"></i></a><br /></td>
+                    <td class="fieldarea" width="30%">
+                      <div id="nonApplicablePromoWarning" class="alert alert-info text-center" style="display: none;">The promotion code that you selected is not usually applicable to this service.</div>
+                      <div style="max-width:300px" class="form-field-width-container">
+                        <select name="promoid" class="form-control select-inline selectize-promo" id="promoid"><option value="0">None</option></select>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 9 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Module Commands</td>
+                    <td class="fieldarea" colspan="3">
+                      <div id="modcmdbtns">
+                        <button type="button" class="btn btn-default" onclick="jQuery('#modalModuleCreate').modal('show');" id="btnCreate">Create</button>
+                        <button type="button" class="btn btn-default" onclick="jQuery('#modalModuleSuspend').modal('show');" id="btnSuspend">Suspend</button>
+                        <button type="button" class="btn btn-default" onclick="jQuery('#modalModuleUnsuspend').modal('show');" id="btnUnsuspend">Unsuspend</button>
+                        <button type="button" class="btn btn-default" onclick="jQuery('#modalModuleTerminate').modal('show');" id="btnTerminate">Terminate</button>
+                        <button type="button" class="btn btn-default" onclick="jQuery('#modalModuleChangePackage').modal('show');" id="btnChange_Package">Change Package</button>
+                        <button type="button" class="btn btn-default" onclick="runModuleCommand('changepw')" id="btnChange_Password">Change Password</button>
+                      </div>
+                      <div id="modcmdworking" style="display:none;text-align:center;"><img src="images/loader.gif" /> &nbsp; Working...</div>
+                    </td>
+                  </tr>
+
+                  <!-- row 10 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Addons</td>
+                    <td class="fieldarea" colspan="3">
+                      <div class="addons-service-table">
+                        <div class="tablebg">
+                          <table id="sortabletbl1" class="datatable" width="100%" border="0" cellspacing="1" cellpadding="3">
+                            <tr><th>Reg Date</th><th>Name</th><th>Pricing</th><th>Status</th><th>Next Due Date</th><th width="20"></th><th width="20"></th></tr>
+                            <tr><td colspan="7">No Records Found</td></tr>
+                          </table>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 11 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Subscription ID</td>
+                    <td class="fieldarea" colspan="3">
+                      <div id="subscription">
+                        <div class="form-inline">
+                          <div class="form-group"><input type="text" name="subscriptionid" value="" size="25" class="form-control" id="inputSubscriptionid" /></div>
+                        </div>
+                      </div>
+                      <div id="subscriptionworking" style="display:none;text-align:center;"><img src="images/loader.gif" />&nbsp; Working...</div>
+                    </td>
+                  </tr>
+
+                  <!-- row 12 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Override Auto-Suspend</td>
+                    <td class="fieldarea" colspan="3">
+                      <div class="form-group date-picker-prepend-icon">
+                        <label class="checkbox-inline"><input type="checkbox" name="overideautosuspend" value="1" /> Do not suspend until</label> &nbsp;
+                        <label for="inputOverideSuspendUntil" class="field-icon"><i class="fal fa-calendar-alt"></i></label>
+                        <input type="text" name="overidesuspenduntil" value="" class="form-control input-inline date-picker-single future" id="inputOverideSuspendUntil" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- row 13 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Auto-Terminate End of Cycle</td>
+                    <td class="fieldarea" colspan="3">
+                      <label class="checkbox-inline"><input type="checkbox" name="autoterminateendcycle" value="1" /> Reason</label>
+                      <input type="text" name="autoterminatereason" value="" size="60" class="form-control input-inline input-400" id="inputAutoterminatereason" />
+                    </td>
+                  </tr>
+
+                  <!-- row 14 -->
+                  <tr>
+                    <td class="fieldlabel" width="20%">Admin Notes</td>
+                    <td class="fieldarea" colspan="3">
+                      <textarea name="notes" rows="4" style="width:100%" class="form-control"></textarea>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- buttons -->
+                <div class="btn-container">
+                  <input type="submit" value="Save Changes" class="btn btn-primary" />
+                  <input type="reset" value="Cancel Changes" class="btn btn-default" />
+                </div>
+              </form>
+
+              <!-- hidden whois form -->
+              <form method="post" action="whois.php" target="_blank" id="frmWhois">
+                <input type="hidden" name="token" value="a9b02030b5942cd59573fa653f19c564e05193e5" />
+                <input type="hidden" name="domain" value="abcgmail.com" />
+              </form>
+            </div>
+          </div>
+
+          <!-- MODALS (unchanged) -->
+          <div class="modal fade" id="modalModuleCreate" tabindex="-1" role="dialog" aria-labelledby="ModuleCreateLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Confirm Module Command</h4></div>
+              <div class="modal-body">Are you sure you want to run the create function?</div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='runModuleCommand("create")'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+          <div class="modal fade" id="modalModuleSuspend" tabindex="-1" role="dialog" aria-labelledby="ModuleSuspendLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Confirm Module Command</h4></div>
+              <div class="modal-body">Are you sure you want to run the suspend function?<br />
+                <div class="margin-top-bottom-20 text-center">Suspension Reason: <input type="text" id="suspreason" class="form-control input-inline input-300" /><br /><br />
+                <label class="checkbox-inline"><input type="checkbox" id="suspemail" /> Send Suspension Email</label></div>
+              </div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='runModuleCommand("suspend")'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+          <div class="modal fade" id="modalModuleUnsuspend" tabindex="-1" role="dialog" aria-labelledby="ModuleUnsuspendLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Confirm Module Command</h4></div>
+              <div class="modal-body">Are you sure you want to run the unsuspend function?<br />
+                <div class="margin-top-bottom-20 text-center"><label class="checkbox-inline"><input type="checkbox" id="unsuspended_email" /> Send Unsuspension Email</label></div>
+              </div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='runModuleCommand("unsuspend")'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+          <div class="modal fade" id="modalModuleTerminate" tabindex="-1" role="dialog" aria-labelledby="ModuleTerminateLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Confirm Module Command</h4></div>
+              <div class="modal-body">Are you sure you want to run the terminate function?</div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='runModuleCommand("terminate")'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+          <div class="modal fade" id="modalModuleChangePackage" tabindex="-1" role="dialog" aria-labelledby="ModuleChangePackageLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Confirm Module Command</h4></div>
+              <div class="modal-body">Are you sure you want to run the change package function?</div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='runModuleCommand("changepackage")'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+          <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="DeleteLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content panel panel-primary">
+              <div class="modal-header panel-heading"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title">Delete Product/Service</h4></div>
+              <div class="modal-body">Are you sure you want to delete this service? This will also remove any associated addons but not run the module terminate function.</div>
+              <div class="modal-footer"><button type="button" class="btn btn-primary" onclick='window.location="?userid=7&id=5&action=delete&token=a9b02030b5942cd59573fa653f19c564e05193e5"'>Yes</button><button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+            </div></div>
+          </div>
+
+        </div> <!-- / container-p-y -->
+
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+          <div class="container-xxl">
+            <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+              <div class="text-body">&#169; 2026, made with ❤️ by <a href="https://pixinvent.com" target="_blank" class="footer-link">Pixinvent</a></div>
+              <div class="d-none d-lg-inline-block">
+                <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank">License</a>
+                <a href="https://themeforest.net/user/pixinvent/portfolio" target="_blank" class="footer-link me-4">More Themes</a>
+                <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+                <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <div class="content-backdrop fade"></div>
+      </div> <!-- / content-wrapper -->
+    </div> <!-- / layout-page -->
+  </div> <!-- / layout-container -->
+
+  <!-- Overlay and drag target -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+  <div class="drag-target"></div>
+</div> <!-- / layout-wrapper -->
+
+<!-- Core JS -->
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/node-waves/node-waves.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../../assets/vendor/js/menu.js"></script>
+
+<!-- Vendors JS -->
+<script src="../../assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="../../assets/vendor/libs/select2/select2.js"></script>
+
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
+<!-- dummy functions -->
+<script>
+  function submitServiceChange() { console.log('service change'); }
+  function runModuleCommand(cmd) { alert('Module command: ' + cmd); $('#modalModuleCreate').modal('hide'); }
+  $(function () { $('[data-toggle="tooltip"]').tooltip(); });
+</script>
+</body>
+</html>
