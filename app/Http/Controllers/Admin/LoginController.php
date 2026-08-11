@@ -19,20 +19,21 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        // dd($credentials);
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (auth()->user()->hasRole('admin')) {
-                // dd('user');
-                return redirect()->route('admin.dashboard');
-            } elseif (auth()->user()->hasRole('user')) {
+            $user = auth()->user();
 
-            // dd('user');
+            if ($user->hasRole('Super Admin') || $user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            }
+
+            if ($user->hasRole('user')) {
                 return redirect()->route('user.dashboard');
             }
-        }
 
+            return redirect('/');
+        }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
