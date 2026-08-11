@@ -76,4 +76,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function chatGroups()
+    {
+        return $this->hasMany(
+            \App\Models\Chat\ChatGroupMember::class,
+            'user_id'
+        );
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(
+            \App\Models\Chat\Message::class,
+            'user_id'
+        );
+    }
+
+    public function createdGroups()
+    {
+        return $this->hasMany(
+            \App\Models\Chat\ChatGroup::class,
+            'created_by'
+        );
+    }
 }
