@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
 
 Route::middleware('guest')->group(function () {
 

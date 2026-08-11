@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,17 +19,20 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
+        // dd($credentials);
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
 
             if (auth()->user()->hasRole('admin')) {
+                // dd('user');
                 return redirect()->route('admin.dashboard');
             } elseif (auth()->user()->hasRole('user')) {
+
+            // dd('user');
                 return redirect()->route('user.dashboard');
             }
         }
 
-        // dd(auth()->user());
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -42,6 +45,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
