@@ -65,7 +65,7 @@
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
 
-            @include('backend.layouts.sidebar')
+            @include('admin.layouts.sidebar')
 
             @yield('content')
         </div>

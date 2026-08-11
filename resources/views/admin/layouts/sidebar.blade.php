@@ -41,45 +41,6 @@
                 <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
             </a>
         </li>
-        <!-- Front Pages -->
-        <li class="menu-item {{ Request::is('admin/config/country*') || Request::is('admin/config/location*') ? 'open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-files"></i>
-                <div data-i18n="Front Pages">Front Pages</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('admin/config/country*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.country.index') }}" class="menu-link">
-                        <div data-i18n="country">Country</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/config/location*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.location.index') }}" class="menu-link">
-                        <div data-i18n="location">Location</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/pricing-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Pricing">Pricing</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/payment-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Payment">Payment</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/checkout-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Checkout">Checkout</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/help-center-landing.html" class="menu-link" target="_blank">
-                        <div data-i18n="Help Center">Help Center</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
 
         <!-- Apps & Pages -->
         <li class="menu-header small">
@@ -250,59 +211,7 @@
         </li>
         <!-- e-commerce-app menu end -->
         <!-- Academy menu start -->
-        <li class="menu-item {{ Request::is('admin/academy*') ? 'open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-book"></i>
-                <div data-i18n="Academy">Academy</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('admin/academy/categories') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.categories') }}" class="menu-link">
-                        <div data-i18n="Categories">Categories</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/courses') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.courses') }}" class="menu-link">
-                        <div data-i18n="Courses">Courses</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/curriculas') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.curriculas') }}" class="menu-link">
-                        <div data-i18n="Curriculas">Curriculas</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/degrees') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.degrees') }}" class="menu-link">
-                        <div data-i18n="Degrees">Degrees</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/studies') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.studies') }}" class="menu-link">
-                        <div data-i18n="Studies">Studies</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/departments') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.departments') }}" class="menu-link">
-                        <div data-i18n="Departments">Departments</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/subjects') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.subjects') }}" class="menu-link">
-                        <div data-i18n="Subjects">Subjects</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/course-subjects') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.courseSubjects') }}" class="menu-link">
-                        <div data-i18n="Course & Subjects">Course & Subjects</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ Request::is('admin/academy/institutes') ? 'active' : '' }}">
-                    <a href="{{ route('admin.academy.institutes') }}" class="menu-link">
-                        <div data-i18n="Institutes">Institutes</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        
         <!-- Academy menu end -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

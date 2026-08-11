@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        return view('admin.login');
     }
 
     public function authenticate(Request $request)
@@ -28,6 +28,8 @@ class LoginController extends Controller
                 return redirect()->route('user.dashboard');
             }
         }
+
+        // dd(auth()->user());
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
