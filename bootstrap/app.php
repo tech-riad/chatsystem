@@ -11,6 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
+    ->withMiddleware(function ($middleware) {
+
+        $middleware->alias([
+
+            'admin'=>App\Http\Middleware\AdminMiddleware::class,
+
+            'user'=>App\Http\Middleware\UserMiddleware::class,
+
+        ]);
+
+    })
     ->withMiddleware(function (Middleware $middleware) {
         //
     })
