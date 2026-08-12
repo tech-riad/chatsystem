@@ -12,5 +12,8 @@
     </div>
 
     <p>Welcome, {{ auth()->user()->name }}!</p>
+
+
+    <a href="{{ route('user.chat.index') }}" class="btn btn-primary">Go to Chat</a>
 </div>
 @endsection

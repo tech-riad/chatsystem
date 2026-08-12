@@ -27,15 +27,16 @@ class ChatGroupController extends Controller
      */
     public function index()
     {
-        // dd(auth()->user()->getRoleNames());
         $groups = ChatGroup::with([
-                'creator',
-                'members.user'
-            ])
-            ->latest()
-            ->paginate(10);
+            'creator',
+            'members.user',
+        ])
+        ->latest()
+        ->paginate(10);
 
-        return view('admin.chat-groups.index', compact('groups'));
+        return view('admin.chat-groups.index',
+            compact('groups')
+        );
     }
 
     /**
@@ -86,10 +87,17 @@ class ChatGroupController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.chat-groups.edit', compact(
-            'chatGroup',
-            'users'
-        ));
+        $selectedMembers = $chatGroup->members()
+            ->pluck('user_id')
+            ->toArray();
+
+        return view('admin.chat-groups.edit',
+            compact(
+                'chatGroup',
+                'users',
+                'selectedMembers'
+            )
+        );
     }
 
     /**

@@ -83,4 +83,44 @@ class ChatGroupService
 
         });
     }
+
+    public function update(ChatGroup $group, array $data): ChatGroup
+    {
+        return DB::transaction(function () use ($group, $data) {
+
+            $image = $group->image;
+
+            if (!empty($data['image'])) {
+
+                if ($group->image && Storage::disk('public')->exists($group->image)) {
+                    Storage::disk('public')->delete($group->image);
+                }
+
+                $image = $data['image']->store('chat/groups', 'public');
+            }
+
+            $group->update([
+                'name'        => $data['name'],
+                'description' => $data['description'] ?? null,
+                'image'       => $image,
+            ]);
+
+            // পুরনো Member Delete
+            $group->members()
+                ->where('is_admin', false)
+                ->delete();
+
+            // নতুন Member Add
+            foreach ($data['members'] as $memberId) {
+
+                $group->members()->create([
+                    'user_id'   => $memberId,
+                    'is_admin'  => false,
+                    'joined_at' => now(),
+                ]);
+            }
+
+            return $group;
+        });
+    }
 }
