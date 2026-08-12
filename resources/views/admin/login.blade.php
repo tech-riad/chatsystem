@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Demo: Login Basic - Pages | Global Tuition - Bootstrap Dashboard PRO</title>
+    <title>Demo: Login Basic - Pages | Chat System - Bootstrap Dashboard PRO</title>
 
     <meta name="description" content="" />
 
@@ -92,11 +92,11 @@
                                         </svg>
                                     </span>
                                 </span>
-                                <span class="app-brand-text demo text-heading fw-bold">Global Tuition</span>
+                                <span class="app-brand-text demo text-heading fw-bold">Chat System</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-1">Welcome to Global Tuition! 👋</h4>
+                        <h4 class="mb-1">Welcome to Chat System! 👋</h4>
                         <p class="mb-6">Please sign-in to your account and start the adventure</p>
 
                         <form id="formAuthentication" class="mb-4" action="{{ route('login') }}" method="POST">

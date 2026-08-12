@@ -255,6 +255,8 @@
 
 
             <h3 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin /</span> Chat Groups</h3>
+            <a href="{{route('admin.chat-groups.create')}}" class="btn btn-primary">Create Group</a>
+
         </div>
     </div>
     <!-- / Content wrapper -->

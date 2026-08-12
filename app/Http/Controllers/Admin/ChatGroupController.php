@@ -11,21 +11,23 @@ class ChatGroupController extends Controller
 {
 
     protected ChatGroupService $groupService;
-    // public function __construct(ChatGroupService $groupService)
-    // {
-    //     $this->groupService = $groupService;
 
-    //     $this->middleware('permission:group.view')->only(['index']);
-    //     $this->middleware('permission:group.create')->only(['create', 'store']);
-    //     $this->middleware('permission:group.edit')->only(['edit', 'update']);
-    //     $this->middleware('permission:group.delete')->only(['destroy']);
-    // }
+    public function __construct(ChatGroupService $groupService)
+    {
+        $this->groupService = $groupService;
+
+        $this->middleware('permission:group.view')->only(['index']);
+        $this->middleware('permission:group.create')->only(['create', 'store']);
+        $this->middleware('permission:group.edit')->only(['edit', 'update']);
+        $this->middleware('permission:group.delete')->only(['destroy']);
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // dd(auth()->user()->getRoleNames());
         $groups = ChatGroup::with([
                 'creator',
                 'members.user'
@@ -46,7 +48,10 @@ class ChatGroupController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('admin.chat-groups.create', compact('users'));
+            // dd(auth()->user()->getRoleNames());
+
+        return view('admin.chat-groups.create',compact('users')
+        );
     }
 
     /**
@@ -54,11 +59,13 @@ class ChatGroupController extends Controller
      */
     public function store(StoreChatGroupRequest $request)
     {
-        $this->groupService->store($request->validated());
+        $this->groupService->store(
+            $request->validated()
+        );
 
         return redirect()
             ->route('admin.chat-groups.index')
-            ->with('success', 'Group created successfully.');
+            ->with('success','Group Created Successfully');
     }
 
     /**

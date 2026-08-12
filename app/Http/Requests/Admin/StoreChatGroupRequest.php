@@ -12,7 +12,7 @@ class StoreChatGroupRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check() && (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin'));
     }
 
     /**
