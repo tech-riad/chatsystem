@@ -11,14 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
-    ->withMiddleware(function ($middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
 
         $middleware->alias([
+            'admin' => App\Http\Middleware\AdminMiddleware::class,
+            'user' => App\Http\Middleware\UserMiddleware::class,
 
-            'admin'=>App\Http\Middleware\AdminMiddleware::class,
-
-            'user'=>App\Http\Middleware\UserMiddleware::class,
-
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
 
     })

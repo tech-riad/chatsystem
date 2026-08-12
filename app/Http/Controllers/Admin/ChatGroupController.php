@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Chat\ChatGroup;
+use App\Models\User;
 
 class ChatGroupController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $groups = ChatGroup::with([
+                'creator',
+                'members.user'
+            ])
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.chat-groups.index', compact('groups'));
     }
 
     /**
@@ -20,46 +29,59 @@ class ChatGroupController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::role('User')
+            ->where('status', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.chat-groups.create', compact('users'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource.
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(ChatGroup $chatGroup)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(ChatGroup $chatGroup)
     {
-        //
+        $users = User::role('User')
+            ->where('status', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.chat-groups.edit', compact(
+            'chatGroup',
+            'users'
+        ));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource.
      */
-    public function update(Request $request, string $id)
+    public function update(ChatGroup $chatGroup)
     {
-        //
+
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource.
      */
-    public function destroy(string $id)
+    public function destroy(ChatGroup $chatGroup)
     {
-        //
+
     }
 }
