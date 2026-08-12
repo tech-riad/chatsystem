@@ -22,13 +22,13 @@ class ChatGroupMember extends Model
         'joined_at' => 'datetime',
     ];
 
+   public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function group()
     {
         return $this->belongsTo(ChatGroup::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

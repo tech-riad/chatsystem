@@ -1,35 +1,41 @@
-<div class="d-flex flex-column h-100">
+<div class="bg-white h-100">
 
-    <div class="p-3 border-bottom">
+    <div class="border-bottom p-3">
 
-        <h4 class="mb-0">
-
+        <h5 class="mb-0">
             Chats
-
-        </h4>
+        </h5>
 
     </div>
 
     <div class="p-2">
 
         <input
-            type="text"
             class="form-control"
-            placeholder="Search Group">
+            placeholder="Search chat...">
 
     </div>
 
-    <div class="flex-grow-1 overflow-auto">
+    <div class="list-group list-group-flush">
 
-        @forelse($groups as $group)
+        @foreach($groups as $group)
+
+            @php
+
+                $lastMessage = $group->messages->first();
+
+                $active = isset($activeGroup)
+                    && $activeGroup->id == $group->id;
+
+            @endphp
 
             <a
                 href="{{ route('user.chat.show',$group) }}"
-                class="text-decoration-none text-dark">
+                class="list-group-item list-group-item-action {{ $active ? 'active' : '' }}">
 
-                <div class="d-flex align-items-center p-3 border-bottom">
+                <div class="d-flex">
 
-                    {{-- Image --}}
+                    {{-- Group Image --}}
                     <div>
 
                         @if($group->image)
@@ -42,39 +48,54 @@
 
                         @else
 
-                            <img
-                                src="{{ asset('assets/img/default-group.png') }}"
-                                width="55"
-                                height="55"
-                                class="rounded-circle">
+                            <div
+                                class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                                style="width:55px;height:55px;">
+
+                                {{ strtoupper(substr($group->name,0,1)) }}
+
+                            </div>
 
                         @endif
 
                     </div>
 
                     {{-- Info --}}
+
                     <div class="ms-3 flex-grow-1">
 
-                        <h6 class="mb-1">
+                        <div
+                            class="d-flex justify-content-between">
 
-                            {{ $group->name }}
+                            <strong>
 
-                        </h6>
+                                {{ $group->name }}
 
-                        <small class="text-muted">
+                            </strong>
 
-                            No Message Yet
+                            @if($lastMessage)
+
+                                <small>
+
+                                    {{ $lastMessage->created_at->format('h:i A') }}
+
+                                </small>
+
+                            @endif
+
+                        </div>
+
+                        <small>
+
+                            {{ $lastMessage?->message ?? 'No Message Yet' }}
 
                         </small>
 
-                    </div>
-
-                    {{-- Time --}}
-                    <div>
+                        <br>
 
                         <small class="text-muted">
 
-                            {{ $group->created_at->format('h:i A') }}
+                            {{ $group->members->count() }} Members
 
                         </small>
 
@@ -84,15 +105,7 @@
 
             </a>
 
-        @empty
-
-            <div class="text-center p-5">
-
-                No Group Found
-
-            </div>
-
-        @endforelse
+        @endforeach
 
     </div>
 

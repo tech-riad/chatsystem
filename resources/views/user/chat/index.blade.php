@@ -23,5 +23,20 @@
     </div>
 
 </div>
+    <script>
+
+    window.onload=function(){
+
+        let box=document.getElementById('messageContainer');
+
+        if(box){
+
+            box.scrollTop=box.scrollHeight;
+
+        }
+
+    }
+
+    </script>
 
 @endsection

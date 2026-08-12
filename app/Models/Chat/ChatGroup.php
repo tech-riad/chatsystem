@@ -25,27 +25,18 @@ class ChatGroup extends Model
         'status' => 'boolean',
     ];
 
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function members()
-    {
-        return $this->hasMany(ChatGroupMember::class, 'group_id');
-    }
-
     public function messages()
-    {
-        return $this->hasMany(Message::class, 'group_id');
-    }
+{
+    return $this->hasMany(Message::class, 'group_id');
+}
 
-    protected static function booted()
-    {
-        static::creating(function ($group) {
+public function members()
+{
+    return $this->hasMany(ChatGroupMember::class, 'group_id');
+}
 
-            $group->uuid = Str::uuid();
-
-        });
-    }
+public function creator()
+{
+    return $this->belongsTo(User::class, 'created_by');
+}
 }

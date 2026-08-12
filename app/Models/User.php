@@ -73,9 +73,11 @@ class User extends Authenticatable
 
     public function chatGroups()
     {
-        return $this->hasMany(
-            \App\Models\Chat\ChatGroupMember::class,
-            'user_id'
+        return $this->belongsToMany(
+            \App\Models\Chat\ChatGroup::class,
+            'chat_group_members',
+            'user_id',
+            'group_id'
         );
     }
 

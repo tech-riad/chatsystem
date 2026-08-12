@@ -1,77 +1,30 @@
 <div
-    id="messages"
-    style="height:calc(100vh - 180px);
-    overflow-y:auto;
-    background:#efeae2;">
+    id="messageContainer"
+    class="p-3"
+    style="
+        height:calc(100vh - 150px);
+        overflow-y:auto;
+        background:#ECE5DD;
+    ">
 
-    <div class="p-3">
+    @forelse($activeGroup->messages as $message)
 
-        @forelse($activeGroup->messages->reverse() as $message)
+        @include(
+            'user.chat.partials.message',
+            [
+                'message'=>$message
+            ]
+        )
 
-            @if($message->user_id==auth()->id())
+    @empty
 
-                <div class="d-flex justify-content-end mb-3">
+        <div
+            class="text-center mt-5">
 
-                    <div
-                        class="bg-success text-white p-2 rounded"
-                        style="max-width:60%;">
+            No Message Found
 
-                        {{ $message->message }}
+        </div>
 
-                        <br>
-
-                        <small>
-
-                            {{ $message->created_at->format('h:i A') }}
-
-                        </small>
-
-                    </div>
-
-                </div>
-
-            @else
-
-                <div class="d-flex justify-content-start mb-3">
-
-                    <div
-                        class="bg-white p-2 rounded"
-                        style="max-width:60%;">
-
-                        <strong>
-
-                            {{ $message->sender->name }}
-
-                        </strong>
-
-                        <br>
-
-                        {{ $message->message }}
-
-                        <br>
-
-                        <small>
-
-                            {{ $message->created_at->format('h:i A') }}
-
-                        </small>
-
-                    </div>
-
-                </div>
-
-            @endif
-
-        @empty
-
-            <div class="text-center mt-5">
-
-                No Message
-
-            </div>
-
-        @endforelse
-
-    </div>
+    @endforelse
 
 </div>

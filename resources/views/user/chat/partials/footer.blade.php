@@ -1,44 +1,128 @@
-<div class="border-top p-3">
+<form
+    id="messageForm"
+    action="{{ route('chat.message.store',$activeGroup) }}"
+    method="POST">
 
-    <form
-        id="messageForm">
+    @csrf
 
-        <div class="input-group">
+    <div class="input-group">
 
-            <button
-                class="btn btn-light"
-                type="button">
+        <input
+            id="messageInput"
+            type="text"
+            name="message"
+            class="form-control"
+            placeholder="Type a message..."
+            autocomplete="off">
 
-                😊
+        <button
+            type="submit"
+            class="btn btn-primary">
+            Send
+        </button>
 
-            </button>
+    </div>
 
-            <input
-                type="text"
-                id="message"
+</form>
+@push('scripts')
 
-                class="form-control"
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-                placeholder="Type a message">
+    const form = document.getElementById('messageForm');
 
-            <button
-                class="btn btn-light"
-                type="button">
+    if (!form) return;
 
-                📎
+    form.addEventListener('submit', async function(e){
 
-            </button>
+        e.preventDefault();
 
-            <button
-                class="btn btn-primary"
-                type="submit">
+        const submitButton = form.querySelector('button[type="submit"]');
 
-                Send
+        submitButton.disabled = true;
 
-            </button>
+        try{
+
+            const response = await fetch(form.action,{
+
+                method:'POST',
+
+                headers:{
+                    'X-CSRF-TOKEN':document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
+
+                    'X-Requested-With':'XMLHttpRequest',
+
+                    'Accept':'application/json'
+                },
+
+                body:new FormData(form)
+
+            });
+
+            const data = await response.json();
+
+            if(data.success){
+
+                appendMessage(data.message);
+
+                form.reset();
+
+                scrollBottom();
+
+            }
+
+        }catch(error){
+
+            console.error(error);
+
+        }finally{
+
+            submitButton.disabled = false;
+
+        }
+
+    });
+
+});
+
+function appendMessage(message)
+{
+
+    const container=document.querySelector('#messageContainer .p-3');
+
+    container.insertAdjacentHTML('beforeend',`
+
+        <div class="d-flex justify-content-end mb-3">
+
+            <div
+                class="bg-success text-white p-2 rounded"
+                style="max-width:70%;">
+
+                ${message.message}
+
+                <br>
+
+                <small>
+
+                    just now
+
+                </small>
+
+            </div>
 
         </div>
 
-    </form>
+    `);
 
-</div>
+}
+
+function scrollBottom()
+{
+    const box=document.getElementById('messageContainer');
+
+    box.scrollTop=box.scrollHeight;
+}
+</script>
+@endpush
