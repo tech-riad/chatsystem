@@ -3,11 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreChatGroupRequest;
 use App\Models\Chat\ChatGroup;
 use App\Models\User;
-
+use App\Services\Chat\ChatGroupService;
 class ChatGroupController extends Controller
 {
+
+    protected ChatGroupService $groupService;
+    // public function __construct(ChatGroupService $groupService)
+    // {
+    //     $this->groupService = $groupService;
+
+    //     $this->middleware('permission:group.view')->only(['index']);
+    //     $this->middleware('permission:group.create')->only(['create', 'store']);
+    //     $this->middleware('permission:group.edit')->only(['edit', 'update']);
+    //     $this->middleware('permission:group.delete')->only(['destroy']);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -40,9 +52,13 @@ class ChatGroupController extends Controller
     /**
      * Store a newly created resource.
      */
-    public function store()
+    public function store(StoreChatGroupRequest $request)
     {
+        $this->groupService->store($request->validated());
 
+        return redirect()
+            ->route('admin.chat-groups.index')
+            ->with('success', 'Group created successfully.');
     }
 
     /**
