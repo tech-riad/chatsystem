@@ -13,12 +13,10 @@ Route::middleware(['auth','user'])
 
 ->group(function(){
 
-    Route::get('/dashboard',[DashboardController::class,'index'])
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
-    ->name('dashboard');
-
-    Route::get('/chat', [ChatController::class, 'index'])
-        ->name('chat.index');
+     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{group}', [ChatController::class, 'show'])->name('chat.show');
 
 });
 

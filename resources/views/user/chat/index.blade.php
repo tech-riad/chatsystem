@@ -8,15 +8,15 @@
 
     <div class="row vh-100">
 
-        <div class="col-md-4 border-end p-0">
+        <div class="col-lg-4 border-end p-0">
 
             @include('user.chat.partials.sidebar')
 
         </div>
 
-        <div class="col-md-8 p-0">
+        <div class="col-lg-8 p-0">
 
-            Chat Area
+            @include('user.chat.partials.chat-area')
 
         </div>
 

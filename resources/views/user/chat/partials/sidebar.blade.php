@@ -24,7 +24,7 @@
         @forelse($groups as $group)
 
             <a
-                href="#"
+                href="{{ route('user.chat.show',$group) }}"
                 class="text-decoration-none text-dark">
 
                 <div class="d-flex align-items-center p-3 border-bottom">
