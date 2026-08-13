@@ -35,10 +35,17 @@ class MessageController extends Controller
         return response()->json([
             'success' => true,
             'message' => [
-                'id'      => $message->id,
-                'text'    => $message->message,
-                'time'    => $message->created_at->format('h:i A'),
+
+                'id' => $message->id,
+
+                'text' => $message->message,
+
+                'sender' => $message->sender->name,
+
+                'time' => $message->created_at->format('h:i A'),
+
                 'is_mine' => true,
+
             ]
         ]);
     }

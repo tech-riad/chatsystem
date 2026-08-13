@@ -1,3 +1,5 @@
+import { renderMessage } from "./render-message";
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById('messageForm');
@@ -40,7 +42,14 @@ async function sendMessage(e) {
 
         const data = await response.json();
 
-        appendMessage(data.message);
+        const container = document.getElementById('messageContainer');
+
+        container.insertAdjacentHTML(
+            'beforeend',
+            renderMessage(data.message)
+        );
+
+        scrollBottom();
 
         form.reset();
 
@@ -53,9 +62,9 @@ async function sendMessage(e) {
     }
 
 }
-function appendMessage(message)
-{
-    const container = document.querySelector('#messageContainer .p-3');
+function appendMessage(message) {
+
+    const container = document.getElementById('messageContainer');
 
     if (!container) return;
 
@@ -63,7 +72,11 @@ function appendMessage(message)
         <div class="d-flex justify-content-end mb-3">
 
             <div class="rounded shadow-sm p-2"
-                 style="max-width:70%;background:#DCF8C6;min-width:180px;">
+                 style="
+                    max-width:70%;
+                    min-width:180px;
+                    background:#DCF8C6;
+                 ">
 
                 <div style="white-space:pre-wrap;word-break:break-word;">
 
@@ -85,13 +98,20 @@ function appendMessage(message)
 
         </div>
     `);
+
 }
 
-function scrollBottom()
-{
+function scrollBottom() {
+
     const box = document.getElementById('messageContainer');
 
     if (!box) return;
 
     box.scrollTop = box.scrollHeight;
+
 }
+appendMessage(data.message);
+
+form.reset();
+
+scrollBottom();
