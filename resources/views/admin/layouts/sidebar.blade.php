@@ -40,6 +40,11 @@
                 <div data-i18n="Dashboards">Dashboards</div>
                 <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
             </a>
+            <a href="{{ route('admin.chat-groups.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ti tabler-smart-home"></i>
+                <div data-i18n="Chat Groups">Chat Groups</div>
+                <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
+            </a>
         </li>
 
         <!-- Apps & Pages -->

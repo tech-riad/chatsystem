@@ -107,7 +107,7 @@ class ChatGroupController extends Controller
      */
     public function update(UpdateChatGroupRequest $request, ChatGroup $chatGroup)
     {
-<<<<<<< HEAD
+
         $this->groupService->update(
             $chatGroup,
             $request->validated()
@@ -116,9 +116,7 @@ class ChatGroupController extends Controller
         return redirect()
             ->route('admin.chat-groups.index')
             ->with('success', 'Group Updated Successfully.');
-=======
-        //
->>>>>>> 70ad356 (update)
+
     }
 
     /**

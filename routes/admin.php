@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ChatGroupController;
+use App\Http\Controllers\Admin\UserController;
 
 
 
@@ -14,5 +15,6 @@ Route::middleware([
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
     Route::resource('chat-groups', ChatGroupController::class);
+    Route::resource('users', UserController::class);
 
 });
