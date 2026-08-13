@@ -1,3 +1,3 @@
 import './bootstrap';
-import './chat/chat';
+// import './chat/chat';
 import './chat/send-message';

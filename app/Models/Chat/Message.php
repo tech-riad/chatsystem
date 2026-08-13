@@ -5,7 +5,7 @@ namespace App\Models\Chat;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Str;
 class Message extends Model
 {
     use SoftDeletes;
@@ -19,6 +19,16 @@ class Message extends Model
         'reply_to',
         'is_edited',
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($message) {
+            if (empty($message->uuid)) {
+                $message->uuid = (string) Str::uuid();
+            }
+        });
+    }
 
     protected $casts = [
         'is_edited' => 'boolean',

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('user.chat.partials.app')
 
 @section('title', 'Chat')
 
