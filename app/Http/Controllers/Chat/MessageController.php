@@ -31,6 +31,7 @@ class MessageController extends Controller
         ]);
 
         $message->load('sender');
+        event(new \App\Events\MessageSent($message));
 
         return response()->json([
             'success' => true,

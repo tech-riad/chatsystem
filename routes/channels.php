@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('chat.{groupId}', function ($user, $groupId) {
+
+    return \App\Models\Chat\ChatGroupMember::where(
+        'group_id',
+        $groupId
+    )->where(
+        'user_id',
+        $user->id
+    )->exists();
+
 });
