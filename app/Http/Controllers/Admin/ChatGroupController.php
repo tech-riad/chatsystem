@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreChatGroupRequest;
+use App\Http\Requests\Admin\UpdateChatGroupRequest;
 use App\Models\Chat\ChatGroup;
 use App\Models\User;
 use App\Services\Chat\ChatGroupService;
@@ -27,6 +28,7 @@ class ChatGroupController extends Controller
      */
     public function index()
     {
+        // dd(auth()->user()->getRoleNames());
         $groups = ChatGroup::with([
             'creator',
             'members.user',
@@ -103,9 +105,16 @@ class ChatGroupController extends Controller
     /**
      * Update the specified resource.
      */
-    public function update(ChatGroup $chatGroup)
+    public function update(UpdateChatGroupRequest $request, ChatGroup $chatGroup)
     {
+        $this->groupService->update(
+            $chatGroup,
+            $request->validated()
+        );
 
+        return redirect()
+            ->route('admin.chat-groups.index')
+            ->with('success', 'Group Updated Successfully.');
     }
 
     /**

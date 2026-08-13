@@ -14,37 +14,32 @@ class MessageController extends Controller
     {
         abort_unless(
             $group->members()
-                ->where('user_id',auth()->id())
+                ->where('user_id', auth()->id())
                 ->exists(),
             403
         );
 
-        $request->validate([
-
-            'message'=>'required|string|max:5000'
-
+        $validated = $request->validate([
+            'message' => ['required', 'string', 'max:5000'],
         ]);
 
-        $message=Message::create([
-
-            'group_id'=>$group->id,
-
-            'user_id'=>auth()->id(),
-
-            'message'=>$request->message,
-
-            'type'=>'text'
-
+        $message = Message::create([
+            'group_id' => $group->id,
+            'user_id'  => auth()->id(),
+            'message'  => $validated['message'],
+            'type'     => 'text',
         ]);
 
         $message->load('sender');
 
         return response()->json([
-
-            'success'=>true,
-
-            'message'=>$message
-
+            'success' => true,
+            'message' => [
+                'id'      => $message->id,
+                'text'    => $message->message,
+                'time'    => $message->created_at->format('h:i A'),
+                'is_mine' => true,
+            ]
         ]);
     }
 }

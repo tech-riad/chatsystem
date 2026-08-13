@@ -1,7 +1,6 @@
-<form
-    id="messageForm"
-    action="{{ route('chat.message.store',$activeGroup) }}"
-    method="POST">
+<form id="messageForm"
+      action="{{ route('chat.message.store', $activeGroup) }}"
+      method="POST">
 
     @csrf
 
@@ -9,22 +8,25 @@
 
         <input
             id="messageInput"
-            type="text"
             name="message"
+            type="text"
             class="form-control"
             placeholder="Type a message..."
-            autocomplete="off">
+            autocomplete="off"
+            required>
 
         <button
             type="submit"
             class="btn btn-primary">
-            Send
+
+            <i class="ti ti-send"></i>
+
         </button>
 
     </div>
 
 </form>
-@push('scripts')
+{{-- @push('scripts')
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -125,4 +127,4 @@ function scrollBottom()
     box.scrollTop=box.scrollHeight;
 }
 </script>
-@endpush
+@endpush --}}
