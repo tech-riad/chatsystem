@@ -39,4 +39,13 @@
 
     </script>
 
+    @if($activeGroup)
+    <script>
+        window.chatGroupId = {{ $activeGroup->id }};
+        window.authUserId = {{ auth()->id() }};
+    </script>
+    @endif
+
 @endsection
+
+
