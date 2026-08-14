@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}">
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid p-3">
         @yield('content')
     </div>
+
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>

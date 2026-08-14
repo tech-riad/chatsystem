@@ -1,0 +1,34 @@
+/* Minimal responsive helpers to improve mobile admin views */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: #f8f9fb;
+}
+
+.container-fluid { max-width: 1200px; margin: 0 auto; }
+
+.card { background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(16,24,40,0.04); margin-bottom: 1rem; overflow: hidden; }
+.card-header { padding: 0.75rem 1rem; border-bottom: 1px solid #f1f3f5; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+.card-body { padding: 1rem; }
+
+.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 0.75rem; border-bottom: 1px solid #f1f3f5; text-align: left; }
+
+.form-control { display: block; width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #e6e9ef; border-radius: 6px; }
+.btn { display: inline-block; padding: 0.5rem 0.75rem; border-radius: 6px; border: 0; background: #7367f0; color: #fff; cursor: pointer; }
+.btn.secondary { background: #6c757d; }
+.btn.danger { background: #ff6b6b; }
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+  .card-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .d-flex.space-between { display: flex; width: 100%; justify-content: space-between; }
+  .btn { width: 100%; }
+  .table th, .table td { padding: 0.5rem; }
+}
+
+/* Small helper */
+.text-muted { color: #6b7280; }
+
+/* Make images responsive */
+.img-fluid { max-width: 100%; height: auto; border-radius: 6px; }
