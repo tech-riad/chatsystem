@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu">
     <div class="app-brand demo ">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <span class="text-primary">
                     <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +17,7 @@
                     </svg>
                 </span>
             </span>
-            <span class="app-brand-text demo menu-text fw-bold ms-3">Vuexy</span>
+            <span class="app-brand-text demo menu-text fw-bold ms-3">Chat System</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -29,6 +29,10 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+        @php
+            $groups = \App\Models\Chat\ChatGroup::count();
+            // dd($groups);
+        @endphp
 
 
 
@@ -38,25 +42,15 @@
             <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-smart-home"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
             </a>
             <a href="{{ route('admin.chat-groups.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ti tabler-smart-home"></i>
                 <div data-i18n="Chat Groups">Chat Groups</div>
-                <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
+                <div class="badge text-bg-danger rounded-pill ms-auto">{{$groups}}</div>
             </a>
         </li>
 
-        <!-- Apps & Pages -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
-        </li>
-        <li class="menu-item">
-            <a href="app-email.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-mail"></i>
-                <div data-i18n="Email">Email</div>
-            </a>
-        </li>
+
         <li class="menu-item">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

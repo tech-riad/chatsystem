@@ -37,17 +37,17 @@ class ChatGroup extends Model
     ];
 
     public function messages()
-{
-    return $this->hasMany(Message::class, 'group_id');
-}
+    {
+        return $this->hasMany(Message::class, 'group_id');
+    }
 
-public function members()
-{
-    return $this->hasMany(ChatGroupMember::class, 'group_id');
-}
+    public function members()
+    {
+        return $this->hasMany(ChatGroupMember::class, 'group_id');
+    }
 
-public function creator()
-{
-    return $this->belongsTo(User::class, 'created_by');
-}
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
